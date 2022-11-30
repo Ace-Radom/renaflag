@@ -10,9 +10,26 @@
 }
 
 \usepackage{listings}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{framed}
+\definecolor{file}{rgb}{0.67,0.31,0.32}
+\definecolor{program}{RGB}{196,132,192}
+
 \lstset{
-    basicstyle=\small,
-    basicstyle=\sl
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    frame=none, %tb,                                     % 不显示背景边框
+    backgroundcolor=\color[RGB]{244,244,244},            % 设定背景颜色：浅晦涩，近透明
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\tiny\color{darkgray},                   % 设定行号格式
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=C++,                                        % 设置语言C, C++, bash, Fortran, Python, TeX, make
+    basicstyle=\small, %\scriptsize%\tiny%\footnotesize  % basic fontsize in it
+    breaklines=true
 }
 
 \title{renaflag库总览}
@@ -33,24 +50,69 @@
 
         在日后renaflag可能会被移植兼容linux或同平台的VC编译器
 
-    \section{使用}
+    \newpage
 
-        renaflag仅包含一个头文件 \textbf{renaflag.h} 和一个源程序 \textbf{renaflag.cpp}
+    \section{安装}
+
+        renaflag仅包含一个头文件\textcolor{file}{renaflag.h}和一个源程序\textcolor{file}{renaflag.cpp}
 
         普通使用可以直接拷贝源码, 放置于需要使用该库的程序的同文件夹内并连接
 
-        同时renaflag也提供CMakeLists, 可以使用CMake配合C++环境编译为动态或静态库
+        同时renaflag也提供CMakeLists, 配合C++环境编译为动态或静态库
 
         比如在MinGW环境下, 只需在renaflag源码根目录下执行:
 
-        \begin{lstlisting}
-            
-        cmake .
-        mingw32-make
-        mingw32-make install
+        \textit{\ \ \ \ \ \ cmake . -G "MinGW Makefiles"}
 
+        \textit{\ \ \ \ \ \ mingw32-make}
+        
+        \textit{\ \ \ \ \ \ mingw32-make install}
+
+        如此就能安装renaflag的动态和静态库, 随后只需在项目的CMakeLists中连接即可
+    
+    \newpage
+
+    \section{基本使用}
+
+        \small
+        
+        注：若没有特殊说明 本文中提到的“标准拉丁字母”皆代表自a至z的26个英文字母
+        
+        \dotfill
+        \normalsize
+        
+        添加renaflag库的头文件只需在项目中主程序/头文件头部加上
+
+        \begin{lstlisting}[numbers=none]
+        #include"renaflag.h"
         \end{lstlisting}
 
-    
+        在头文件\textcolor{file}{renaflag.h}中定义了\textcolor{program}{renaflag}类, 封装于命名空间\textcolor{program}{rena}下
+
+        这是renaflag实现命令行解析的基类
+
+        \subsection{初始化}
+
+            在\textcolor{program}{renaflag}类内声明了未被实现的成员函数\textcolor{program}{preset}
+
+            所有的命令行标识符声明, 帮助文档声明等预设选项都应该被包含在使用renaflag的源程序内对\textcolor{program}{preset}成员函数的实现代码内
+
+            因此, 初始化renaflag的完整过程为:
+
+            \begin{lstlisting}[numbers=none]
+        #include"renaflag.h"
+
+        void rena::renaflag::preset(){
+            ... // 声明标识符
+
+            ... // 声明帮助文档 (可选)
+        }
+
+        rena::renaflag rf;
+            \end{lstlisting}
+
+            类\textcolor{program}{renaflag}的构析函数会自动调用\textcolor{program}{preset}成员函数, 无需在程序内再次初始化
+
+
 
 \end{document}
