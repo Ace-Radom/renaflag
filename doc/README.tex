@@ -1,0 +1,56 @@
+\documentclass[12pt , a4paper , oneside]{ctexart}
+\pagenumbering{roman}
+
+\usepackage{geometry}
+\geometry{
+    left=2.28cm, 
+    right=2.28cm, 
+    top=4cm, 
+    bottom=4cm
+}
+
+\usepackage{listings}
+\lstset{
+    basicstyle=\small,
+    basicstyle=\sl
+}
+
+\title{renaflag库总览}
+\author{Ace\_Radom}
+\date{2022.12}
+
+\begin{document}
+
+    \maketitle
+
+    \newpage
+
+    \section{概述}
+
+        renaflag是一个C++第三方轻量级命令行解析库
+        
+        目前在Windows内使用MinGW完成开发, 基于C++11标准
+
+        在日后renaflag可能会被移植兼容linux或同平台的VC编译器
+
+    \section{使用}
+
+        renaflag仅包含一个头文件 \textbf{renaflag.h} 和一个源程序 \textbf{renaflag.cpp}
+
+        普通使用可以直接拷贝源码, 放置于需要使用该库的程序的同文件夹内并连接
+
+        同时renaflag也提供CMakeLists, 可以使用CMake配合C++环境编译为动态或静态库
+
+        比如在MinGW环境下, 只需在renaflag源码根目录下执行:
+
+        \begin{lstlisting}
+            
+        cmake .
+        mingw32-make
+        mingw32-make install
+
+        \end{lstlisting}
+
+    
+
+\end{document}
